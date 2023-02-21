@@ -1,11 +1,10 @@
-﻿namespace Mvc.Models.Entities
+﻿namespace Mvc.Models.Dtos
 {
-    public class Product
+    public class GetProductDto
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public byte[] ProductImage { get; set; }
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public string CategoryName { get; set; }
     }
 }

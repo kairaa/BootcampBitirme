@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Mvc.Models.Dtos;
 using Mvc.Models.Entities;
+using System.Text.Json;
 
 namespace Mvc.Controllers
 {
@@ -40,6 +41,13 @@ namespace Mvc.Controllers
                     {
                         //var roles = await _userManager.GetRolesAsync(user);
                         //TempData["Role"] = roles[0];
+                        Response.Cookies.Append("User", JsonSerializer.Serialize(new
+                        {
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            Id = user.Id,
+                            UserName = user.UserName
+                        }));
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -106,11 +114,10 @@ namespace Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
+            Response.Cookies.Delete("User");
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        // TODO : Dto'ları ekle
-        // TODO : Auth ile ilgili View'ları ekle
-        // TODO : Auth ile ilgili controller'ları ekle
+        
     }
 }

@@ -1,0 +1,11 @@
+﻿@using Mvc.Models.Dtos;
+@model UpdateCategoryDto
+
+<form asp-controller="Category" asp-action="Update">
+    <input type="hidden" asp-for="CategoryId" />
+    <div class="mb-3">
+        <label>Kategori Adı: </label>
+        <input asp-for=CategoryName type="text" />
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>

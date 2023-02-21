@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Mvc.AutoMapper;
 using Mvc.Data;
 using Mvc.Models.Entities;
+using Mvc.Services.Contracts;
+using Mvc.Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 builder.Services.AddFluentValidation(a => a.RegisterValidatorsFromAssemblyContaining<Program>());
 builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 
 var app = builder.Build();
 

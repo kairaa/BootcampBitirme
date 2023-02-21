@@ -9,6 +9,10 @@ namespace Mvc.AutoMapper
         public MapperConfig()
         {
             CreateMap<User, RegisterDto>().ReverseMap();
+            CreateMap<Category, CreateCategoryDto>().ReverseMap();
+            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+
+            CreateMap<Product, CreateProductDto>().ReverseMap();
         }
     }
 }

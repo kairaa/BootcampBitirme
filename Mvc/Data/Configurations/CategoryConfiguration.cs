@@ -10,6 +10,13 @@ namespace Mvc.Data.Configurations
         {
             builder.HasIndex(u => u.CategoryId);
             builder.HasIndex(u => u.CategoryName).IsUnique(true);
+
+            builder.HasData(
+                new Category
+                {
+                    CategoryId = 2,
+                    CategoryName = "Akıllı Telefon"
+                });
         }
     }
 }
