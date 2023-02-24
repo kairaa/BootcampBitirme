@@ -13,6 +13,7 @@ namespace Mvc.AutoMapper
             CreateMap<Category, UpdateCategoryDto>().ReverseMap();
 
             CreateMap<Product, CreateProductDto>().ReverseMap();
+            CreateMap<Product, UpdateProductDto>().ReverseMap();
         }
     }
 }

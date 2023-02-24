@@ -86,6 +86,8 @@ namespace Mvc.Controllers
             if (product is not null)
             {
                 var updateProductDto = _mapper.Map<UpdateProductDto>(product);
+                var categories = await _categoryRepository.GetAllAsync();
+                updateProductDto.Categories = categories;
                 return View(updateProductDto);
             }
             return RedirectToAction(nameof(Index));
@@ -97,13 +99,30 @@ namespace Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateProductDto updateProductDto)
         {
-            if (ModelState.IsValid)
+            if(updateProductDto.ProductImageFile != null)
             {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+                FileInfo fileInfo = new FileInfo(updateProductDto.ProductImageFile.FileName);
+                string fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - 4) + fileInfo.Extension;
+
+                string fileNameWithPath = Path.Combine(path, fileName);
+                //fileInfo["Name"] veya fileInfo.name
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    updateProductDto.ProductImageFile.CopyTo(stream);
+                }
+                updateProductDto.ProductImage = ReadFile(fileNameWithPath);
+            }
+
+            updateProductDto.Categories = await _categoryRepository.GetAllAsync();
+            
+            //if (ModelState.IsValid)
+            //{
                 var product = await _productRepository.GetAsync(updateProductDto.ProductId);
                 _mapper.Map(updateProductDto, product);
                 await _productRepository.UpdateAsync(product);
                 return RedirectToAction(nameof(Index));
-            }
+            //}
             return RedirectToAction(nameof(Index));
         }
 
