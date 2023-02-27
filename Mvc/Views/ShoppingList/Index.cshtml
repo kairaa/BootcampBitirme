@@ -5,7 +5,6 @@
 
 @if (Model.Count > 0)
 {
-
     <table class="table">
         <thead>
             <tr>
@@ -14,6 +13,7 @@
                 <th>Liste Açıklaması</th>
                 <th>Listeyi Görüntüle</th>
                 <th>Listeye Ürün Ekle</th>
+                <th>Alışverişe Çık</th>
                 <th>Listeyi Sil</th>
             </tr>
         </thead>
@@ -30,7 +30,20 @@
                         </form>
                     </th>*@
                     <th><a asp-controller="ShoppingList" asp-action="GetListProducts" asp-route-listId="@item.ListId" class="btn btn-primary">Listeyi Görüntüle</a></th>
-                    <th><a asp-controller="ShoppingList" asp-action="AddProduct" asp-route-listId="@item.ListId" class="btn btn-warning">Ürün Ekle</a></th>
+                    @if (item.GoingToShopping)
+                    {
+                        <th>Alışverişe çıkılan listelere ürün eklenemez</th>
+                    }
+                    else
+                    {
+                        <th><a asp-controller="ShoppingList" asp-action="AddProduct" asp-route-listId="@item.ListId" class="btn btn-warning">Ürün Ekle</a></th>
+                    }
+                    @*<th><a asp-controller="ShoppingList" asp-action="GoShoppingForList" asp-route-listId="@item.ListId" class="btn btn-warning">Alışverişe Çık</a></th>*@
+                    <th>
+                        <form asp-action="GoShoppingForList" asp-route-listId="@item.ListId">
+                            <input type="submit" value="Alışverişe Çık" class="btn btn-warning" />
+                        </form>
+                    </th>
                     <th>
                         <form asp-action="Delete" asp-route-listId="@item.ListId">
                             <input type="submit" value="Sil" class="btn btn-danger" />

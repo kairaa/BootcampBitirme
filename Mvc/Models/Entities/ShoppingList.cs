@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mvc.Models.Entities
 {
@@ -10,5 +11,11 @@ namespace Mvc.Models.Entities
         public string? Description { get; set; }
         public User User { get; set; }
         public ICollection<ShoppingListDetail> ShoppingListDetails { get; set; }
+        
+        [DefaultValue(false)]
+        public bool IsCompleted { get; set; }
+
+        [DefaultValue(false)]
+        public bool GoingToShopping { get; set; }
     }
 }

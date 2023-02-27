@@ -100,13 +100,60 @@ namespace Mvc.Controllers
         public async Task<IActionResult> GetListProducts(int listId)
         {
             var list = await _shoppingListsRepository.GetAsync(listId);
-            if(list is not null)
+            //TODO: Başka kişilerin listelerine müdahale edilebiliyor, düzeltebiliyorsan düzelt, olmuyorsa zorlama 
+            if (list is not null)
             {
+                Response.Cookies.Append("ListId", JsonSerializer.Serialize(new
+                {
+                    ListId = listId
+                }));
                 var listProducts = await _shoppingListDetailsRepository.GetProductsAsync(listId);
                 return View(listProducts);
             }
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveProductFromList(int productId)
+        {
+            //TODO: aynı ürün aynı listeye 2 kere eklenirse hata veriyor, düzelt
+            var listId = JsonSerializer.Deserialize<CookieListId>(Request.Cookies["ListId"]);
+            Response.Cookies.Delete("ListId");
+            var product = await _productsRepository.GetAsync(productId);
+            if(product is not null)
+            {
+                await _shoppingListDetailsRepository.RemoveProductFromList(productId, listId.ListId);
+                return RedirectToAction(nameof(GetListProducts), new { listId = listId.ListId });
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GoShoppingForList(int listId)
+        {
+            var list = await _shoppingListsRepository.GetAsync(listId);
+            if (list == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            await _shoppingListsRepository.GoShoppingForList(list);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BuyProduct(int productId)
+        {
+            var listId = JsonSerializer.Deserialize<CookieListId>(Request.Cookies["ListId"]);
+            Response.Cookies.Delete("ListId");
+            var product = await _productsRepository.GetAsync(productId);
+            if (product is not null)
+            {
+                await _shoppingListDetailsRepository.BuyProduct(productId, listId.ListId);
+                return RedirectToAction(nameof(GetListProducts), new { listId = listId.ListId });
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Delete(int listId)

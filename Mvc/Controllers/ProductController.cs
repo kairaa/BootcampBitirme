@@ -120,7 +120,7 @@ namespace Mvc.Controllers
                 await _productRepository.UpdateAsync(product);
                 return RedirectToAction(nameof(Index));
             //}
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
         }
 
         private static byte[] ReadFile(string name)

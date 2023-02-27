@@ -17,22 +17,35 @@ namespace Mvc.Services.Repositories
 
         public async Task<List<GetListProductsDto>> GetProductsAsync(int listId)
         {
+            return await _context.ShoppingListDetail.Where(a => a.ShoppingListId == listId)
+                .Select(a => new GetListProductsDto
+                {
+                    Product = a.Product,
+                    IsBought = a.IsBought,
+                    Amount = a.Amount,
+                    Description = a.Description
+                }).ToListAsync();
+        }
+
+        public async Task RemoveProductFromList(int productId, int listId)
+        {
             /*
-             * return await _context.Products.Select(a => new GetProductDto
-            {
-                ProductId = a.ProductId,
-                CategoryName = a.Category.CategoryName,
-                ProductName = a.ProductName,
-                ProductImage = a.ProductImage
-            }).ToListAsync();
+             * var entity = await GetAsync(id);
+            _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
              */
-            return await _context.ShoppingListDetail.Where(a => a.ShoppingListId == listId).Select(a => new GetListProductsDto
-            {
-                Product = a.Product,
-                IsBought = a.IsBought,
-                Amount = a.Amount,
-                Description = a.Description
-            }).ToListAsync();
+            var listDetail = await _context.ShoppingListDetail
+                .Where(a => a.ShoppingListId == listId && a.Product.ProductId == productId).SingleOrDefaultAsync();
+            _context.ShoppingListDetail.Remove(listDetail);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task BuyProduct(int productId, int listId)
+        {
+            var listDetail = await _context.ShoppingListDetail.Where(a => a.Product.ProductId == productId && a.ShoppingListId == listId).FirstOrDefaultAsync();
+            listDetail.IsBought = true;
+            _context.ShoppingListDetail.Update(listDetail);
+            await _context.SaveChangesAsync();
         }
     }
 }

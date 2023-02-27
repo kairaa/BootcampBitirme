@@ -17,5 +17,12 @@ namespace Mvc.Services.Repositories
         {
             return await _context.ShoppingList.Where(a => a.User.Id == userId).ToListAsync();
         }
+
+        public async Task GoShoppingForList(ShoppingList list)
+        {
+            list.GoingToShopping = true;
+            _context.ShoppingList.Update(list);
+            await _context.SaveChangesAsync();
+        }
     }
 }

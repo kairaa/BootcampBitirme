@@ -12,18 +12,33 @@
                 <th>Miktarı</th>
                 <th>Açıklaması</th>
                 <th>Satın Alındı Mı</th>
+                <th>Ürünü Listeden Kaldır</th>
+                <th>Ürünü Satın Al</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@item.Product.ProductName</td>
-                    <td><img src="data:image;base64,@System.Convert.ToBase64String(item.Product.ProductImage)" width="80" height="80" /></td>
-                    <td>@item.Amount</td>
-                    <td>@item.Description</td>
-                    <td>@(item.IsBought ? "Satın Alındı" : "Henüz Satın Alınmadı")</td>
-                </tr>
+                if (!item.IsBought)
+                {
+                    <tr>
+                        <td>@item.Product.ProductName</td>
+                        <td><img src="data:image;base64,@System.Convert.ToBase64String(item.Product.ProductImage)" width="80" height="80" /></td>
+                        <td>@item.Amount</td>
+                        <td>@item.Description</td>
+                        <td>@(item.IsBought ? "Satın Alındı" : "Henüz Satın Alınmadı")</td>
+                        <th>
+                            <form asp-action="RemoveProductFromList" asp-route-productId="@item.Product.ProductId">
+                                <input type="submit" value="Ürünü Listeden Kaldır" class="btn btn-danger" />
+                            </form>
+                        </th>
+                        <th>
+                            <form asp-action="BuyProduct" asp-route-productId="@item.Product.ProductId">
+                                <input type="submit" value="Ürünü Satın Aldım" class="btn btn-primary" />
+                            </form>
+                        </th>
+                    </tr>
+                }
             }
         </tbody>
     </table>

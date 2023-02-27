@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mvc.Data;
 
@@ -11,9 +12,11 @@ using Mvc.Data;
 namespace Mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230227144004_NewColumnAddedForList")]
+    partial class NewColumnAddedForList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,9 +161,6 @@ namespace Mvc.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("GoingToShopping")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
 
@@ -291,7 +291,7 @@ namespace Mvc.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dd3dd11a-b7d2-4ecc-96b2-49db3cc8ce3b",
+                            ConcurrencyStamp = "f16639a3-ba92-480d-94a1-e47a5b31bcf1",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -299,9 +299,9 @@ namespace Mvc.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKE50zSBDOYrmdxTfR11ppbzHKeSTEJMHQ1stHne3Du+HPm/kytVrvGL9e1Vh8v2qQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKdJisF3OZY1ardsmTrF0y17Iw0+7jLOnXWF1NVYZZ/d07Kt8/DteZFOynfrJdSr/w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "43b1492b-31a1-4cf6-b055-d583b8f70a86",
+                            SecurityStamp = "add29406-1030-48fe-a74b-ba42865e8928",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         },
@@ -309,7 +309,7 @@ namespace Mvc.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "633016df-3165-481c-a11f-5273e930202b",
+                            ConcurrencyStamp = "7e1ca0c4-35af-4fad-a247-f61e3c8c4286",
                             Email = "user@mail.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -317,9 +317,9 @@ namespace Mvc.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@MAIL.COM",
                             NormalizedUserName = "USER@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEO5+uulKgKow+mS9DQXOVmqRDcJefcTlGwswypU67pz7JECbf8UJpCpcQL61KsA4fg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAY8WpKwMaaMfUw7nmWcj1sUXJJh7MiQKOHRxsRSaJTTlzMVW1/A/GWTJ9PnlzveHA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a03c1276-0c6e-4f75-ae71-abf812b4907d",
+                            SecurityStamp = "1585fd6c-d98b-47bc-bab7-2875e32f0396",
                             TwoFactorEnabled = false,
                             UserName = "user@mail.com"
                         },
@@ -327,7 +327,7 @@ namespace Mvc.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6d6687c2-2db0-4fd5-b372-67d5d3dbcc81",
+                            ConcurrencyStamp = "719d6621-c2b6-410e-a721-c7e56b6a0a46",
                             Email = "admin2@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin2",
@@ -335,9 +335,9 @@ namespace Mvc.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN2@MAIL.COM",
                             NormalizedUserName = "ADMIN2@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECpzU3EyGOF9ufRQuAAS5w2regS28MI9yKJ1UOv9KS4/rDR7lnxVU7bZoflJqbAYZQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGtF8OOCDqzFWuIw7zH9nOOSg9lKSX6ajn/1TaZLlsA8EgLtGpuzMyzTG1+mNm5PpQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1e0378bf-4f9d-4987-b0e4-081ca827cf1c",
+                            SecurityStamp = "b3fb0ce6-6190-4c01-a228-acd6376c568f",
                             TwoFactorEnabled = false,
                             UserName = "admin2@mail.com"
                         });
