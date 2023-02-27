@@ -93,9 +93,6 @@ namespace Mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //TODO: Update Product View'ini ekle
-        //TODO: UpdateProductDto'yu oluştur
-
         [HttpPost]
         public async Task<IActionResult> Update(UpdateProductDto updateProductDto)
         {

@@ -36,6 +36,8 @@ builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<IShoppingListsRepository, ShoppingListsRepository>();
+builder.Services.AddScoped<IShoppingListDetailsRepository, ShoppingListDetailsRepository>();
 
 var app = builder.Build();
 

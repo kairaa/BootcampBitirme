@@ -1,0 +1,22 @@
+﻿@using Mvc.Models.Dtos;
+@model AddProductToListDto
+
+<form asp-controller="ShoppingList" asp-action="AddProduct" enctype="multipart/form-data">
+    <div class="form-group mb-3">
+        <label for="categoryList" asp-for="ProductId">Ürün</label>
+        @*Select içerisine tanımlanan SelectList sayesinde Id'ler ile isimler arasındaki ilişki kurulur*@
+        <select id="productList" class="form-control" asp-for="ProductId" asp-items="@(new SelectList(Model.Products,"ProductId","ProductName"))">
+            <option></option>
+        </select>
+        <span asp-validation-for="ProductId" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="amount" asp-for="Amount" class="form-label">Ürün Miktarı</label>
+        <input name="amount" type="number" asp-for="Amount" class="form-control register" id="amount" placeholder="4">
+    </div>
+    <div class="form-group mb-3">
+        <label>Açıklama: </label>
+        <input asp-for=Description type="text" />
+    </div>
+    <button type="submit" class="btn btn-primary">Ürünü Ekle</button>
+</form>

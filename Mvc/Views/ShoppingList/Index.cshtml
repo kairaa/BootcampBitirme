@@ -1,1 +1,50 @@
-﻿<h2>Liste sayfası, sadece user rolüne sahip olanlar görebilir</h2>
+﻿@using Mvc.Models.Entities;
+@model List<ShoppingList>
+
+<h2>Liste sayfası, sadece user rolüne sahip olanlar görebilir</h2>
+
+@if (Model.Count > 0)
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Liste Adı</th>
+                <th>Liste Açıklaması</th>
+                <th>Listeyi Görüntüle</th>
+                <th>Listeye Ürün Ekle</th>
+                <th>Listeyi Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@item.ListId</th>
+                    <td>@item.ListName</td>
+                    <td>@(item.Description != null ? item.Description : "Açıklama yok")</td>
+                    @*<th>
+                        <form asp-action="Delete" asp-route-productId="@item.ProductId">
+                            <input type="submit" value="Sil" class="btn btn-danger" />
+                        </form>
+                    </th>*@
+                    <th><a asp-controller="ShoppingList" asp-action="GetListProducts" asp-route-listId="@item.ListId" class="btn btn-primary">Listeyi Görüntüle</a></th>
+                    <th><a asp-controller="ShoppingList" asp-action="AddProduct" asp-route-listId="@item.ListId" class="btn btn-warning">Ürün Ekle</a></th>
+                    <th>
+                        <form asp-action="Delete" asp-route-listId="@item.ListId">
+                            <input type="submit" value="Sil" class="btn btn-danger" />
+                        </form>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <h3>Herhangi bir kayıt bulunamadı</h3>
+}
+
+<a asp-controller="ShoppingList" asp-action="CreateList" class="btn btn-primary">Liste Oluştur</a>

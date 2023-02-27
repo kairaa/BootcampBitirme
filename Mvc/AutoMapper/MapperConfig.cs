@@ -14,6 +14,9 @@ namespace Mvc.AutoMapper
 
             CreateMap<Product, CreateProductDto>().ReverseMap();
             CreateMap<Product, UpdateProductDto>().ReverseMap();
+
+            CreateMap<ShoppingList, CreateShoppingListDto>().ReverseMap();
+            CreateMap<ShoppingListDetail, AddProductToListDto>().ReverseMap();
         }
     }
 }
