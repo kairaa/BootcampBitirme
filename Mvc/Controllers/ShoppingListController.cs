@@ -61,7 +61,7 @@ namespace Mvc.Controllers
         public async Task<IActionResult> AddProduct(int listId)
         {
             var list = await _shoppingListsRepository.GetAsync(listId);
-            if(list is not null)
+            if (list is not null)
             {
                 Response.Cookies.Append("ListId", JsonSerializer.Serialize(new
                 {
@@ -84,7 +84,7 @@ namespace Mvc.Controllers
             var product = await _productsRepository.GetAsync(addProductToListDto.ProductId);
             //var shoppingList = await _shoppingListsRepository.GetAsync(addProductToListDto.ShoppingListId);
             var shoppingList = await _shoppingListsRepository.GetAsync(listId.ListId);
-            if (product is not null && shoppingList is not null) 
+            if (product is not null && shoppingList is not null)
             {
                 addProductToListDto.Product = product;
                 addProductToListDto.ShoppingList = shoppingList;
@@ -99,10 +99,14 @@ namespace Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> GetListProducts(int listId)
         {
-            var list = await _shoppingListsRepository.GetAsync(listId);
-            //TODO: Başka kişilerin listelerine müdahale edilebiliyor, düzeltebiliyorsan düzelt, olmuyorsa zorlama 
+            var list = await _shoppingListsRepository.GetListAsync(listId);
+            var cookieUser = JsonSerializer.Deserialize<CookieUser>(Request.Cookies["User"]);
             if (list is not null)
             {
+                if (list.User.Id != cookieUser.Id)
+                {
+                    return View("ErrorPage");
+                }
                 Response.Cookies.Append("ListId", JsonSerializer.Serialize(new
                 {
                     ListId = listId
@@ -114,18 +118,12 @@ namespace Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveProductFromList(int productId)
+        public async Task<IActionResult> RemoveProductFromList(int listDetailId)
         {
-            //TODO: aynı ürün aynı listeye 2 kere eklenirse hata veriyor, düzelt
             var listId = JsonSerializer.Deserialize<CookieListId>(Request.Cookies["ListId"]);
             Response.Cookies.Delete("ListId");
-            var product = await _productsRepository.GetAsync(productId);
-            if(product is not null)
-            {
-                await _shoppingListDetailsRepository.RemoveProductFromList(productId, listId.ListId);
-                return RedirectToAction(nameof(GetListProducts), new { listId = listId.ListId });
-            }
-            return RedirectToAction(nameof(Index));
+            await _shoppingListDetailsRepository.RemoveProductFromList(listDetailId);
+            return RedirectToAction(nameof(GetListProducts), new { listId = listId.ListId });
         }
 
         [HttpPost]
@@ -159,7 +157,7 @@ namespace Mvc.Controllers
         public async Task<IActionResult> Delete(int listId)
         {
             var list = await _shoppingListsRepository.GetAsync(listId);
-            if(list == null)
+            if (list == null)
             {
                 return RedirectToAction(nameof(Index));
             }

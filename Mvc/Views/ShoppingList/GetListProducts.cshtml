@@ -28,7 +28,7 @@
                         <td>@item.Description</td>
                         <td>@(item.IsBought ? "Satın Alındı" : "Henüz Satın Alınmadı")</td>
                         <th>
-                            <form asp-action="RemoveProductFromList" asp-route-productId="@item.Product.ProductId">
+                            <form asp-action="RemoveProductFromList" asp-route-listDetailId="@item.ListDetailId">
                                 <input type="submit" value="Ürünü Listeden Kaldır" class="btn btn-danger" />
                             </form>
                         </th>

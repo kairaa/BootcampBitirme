@@ -20,6 +20,7 @@ namespace Mvc.Services.Repositories
             return await _context.ShoppingListDetail.Where(a => a.ShoppingListId == listId)
                 .Select(a => new GetListProductsDto
                 {
+                    ListDetailId = a.ShoppingListDetailId,
                     Product = a.Product,
                     IsBought = a.IsBought,
                     Amount = a.Amount,
@@ -27,7 +28,7 @@ namespace Mvc.Services.Repositories
                 }).ToListAsync();
         }
 
-        public async Task RemoveProductFromList(int productId, int listId)
+        public async Task RemoveProductFromList(int listDetailId)
         {
             /*
              * var entity = await GetAsync(id);
@@ -35,7 +36,7 @@ namespace Mvc.Services.Repositories
             await _context.SaveChangesAsync();
              */
             var listDetail = await _context.ShoppingListDetail
-                .Where(a => a.ShoppingListId == listId && a.Product.ProductId == productId).SingleOrDefaultAsync();
+                .Where(a => a.ShoppingListDetailId == listDetailId).SingleOrDefaultAsync();
             _context.ShoppingListDetail.Remove(listDetail);
             await _context.SaveChangesAsync();
         }

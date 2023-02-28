@@ -5,6 +5,7 @@ namespace Mvc.Services.Contracts
 {
     public interface IShoppingListsRepository : IGenericRepository<ShoppingList>
     {
+        Task<ShoppingList> GetListAsync(int id);
         Task<List<ShoppingList>> GetListsByUserId(int userId);
         Task GoShoppingForList(ShoppingList list);
     }

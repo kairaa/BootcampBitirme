@@ -13,6 +13,13 @@ namespace Mvc.Services.Repositories
             _context = context;
         }
 
+        public async Task<ShoppingList> GetListAsync(int listId)
+        {
+            return await _context.ShoppingList.Include(a => a.User)
+                .Where(a => a.ListId == listId)
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<List<ShoppingList>> GetListsByUserId(int userId)
         {
             return await _context.ShoppingList.Where(a => a.User.Id == userId).ToListAsync();
