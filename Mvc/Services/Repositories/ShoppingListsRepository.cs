@@ -31,5 +31,12 @@ namespace Mvc.Services.Repositories
             _context.ShoppingList.Update(list);
             await _context.SaveChangesAsync();
         }
+
+        public async Task CompleteShopping(ShoppingList list)
+        {
+            list.GoingToShopping = false;
+            _context.ShoppingList.Update(list);
+            await _context.SaveChangesAsync();
+        }
     }
 }

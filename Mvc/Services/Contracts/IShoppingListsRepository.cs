@@ -8,5 +8,6 @@ namespace Mvc.Services.Contracts
         Task<ShoppingList> GetListAsync(int id);
         Task<List<ShoppingList>> GetListsByUserId(int userId);
         Task GoShoppingForList(ShoppingList list);
+        Task CompleteShopping(ShoppingList list);
     }
 }

@@ -139,6 +139,20 @@ namespace Mvc.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> CompleteShopping()
+        {
+            var listId = JsonSerializer.Deserialize<CookieListId>(Request.Cookies["ListId"]);
+            Response.Cookies.Delete("ListId");
+            var list = await _shoppingListsRepository.GetAsync(listId.ListId);
+            if (list == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            await _shoppingListsRepository.CompleteShopping(list);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
         public async Task<IActionResult> BuyProduct(int productId)
         {
             var listId = JsonSerializer.Deserialize<CookieListId>(Request.Cookies["ListId"]);

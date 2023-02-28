@@ -17,10 +17,11 @@ namespace Mvc.Services.Repositories
 
         public async Task<List<GetListProductsDto>> GetProductsAsync(int listId)
         {
-            return await _context.ShoppingListDetail.Where(a => a.ShoppingListId == listId)
+            return await _context.ShoppingListDetail.Include(a => a.ShoppingList).Where(a => a.ShoppingListId == listId)
                 .Select(a => new GetListProductsDto
                 {
                     ListDetailId = a.ShoppingListDetailId,
+                    GoingToShopping = a.ShoppingList.GoingToShopping,
                     Product = a.Product,
                     IsBought = a.IsBought,
                     Amount = a.Amount,

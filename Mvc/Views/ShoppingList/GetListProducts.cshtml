@@ -27,11 +27,18 @@
                         <td>@item.Amount</td>
                         <td>@item.Description</td>
                         <td>@(item.IsBought ? "Satın Alındı" : "Henüz Satın Alınmadı")</td>
-                        <th>
-                            <form asp-action="RemoveProductFromList" asp-route-listDetailId="@item.ListDetailId">
-                                <input type="submit" value="Ürünü Listeden Kaldır" class="btn btn-danger" />
-                            </form>
-                        </th>
+                        @if (!item.GoingToShopping)
+                        {
+                            <th>
+                                <form asp-action="RemoveProductFromList" asp-route-listDetailId="@item.ListDetailId">
+                                    <input type="submit" value="Ürünü Listeden Kaldır" class="btn btn-danger" />
+                                </form>
+                            </th>
+                        }
+                        else
+                        {
+                            <th>Alışverişe çıkılan listede değişiklik yapılamaz!</th>
+                        }
                         <th>
                             <form asp-action="BuyProduct" asp-route-productId="@item.Product.ProductId">
                                 <input type="submit" value="Ürünü Satın Aldım" class="btn btn-primary" />
@@ -48,3 +55,7 @@ else
 {
     <h3>Herhangi bir kayıt bulunamadı</h3>
 }
+
+<form asp-action="CompleteShopping">
+    <input type="submit" value="Alışverişi Tamamla" class="btn btn-primary" />
+</form>

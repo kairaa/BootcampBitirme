@@ -9,5 +9,6 @@ namespace Mvc.Models.Dtos
         public string Description { get; set; }
         public int Amount { get; set; }
         public bool IsBought { get; set; }
+        public bool GoingToShopping { get; set; }
     }
 }
