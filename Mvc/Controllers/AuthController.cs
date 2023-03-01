@@ -82,6 +82,13 @@ namespace Mvc.Controllers
                     if (result.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, false);
+                        Response.Cookies.Append("User", JsonSerializer.Serialize(new
+                        {
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            Id = user.Id,
+                            UserName = user.UserName
+                        }));
                         return RedirectToAction("Index", "Home");
                     }
                     else

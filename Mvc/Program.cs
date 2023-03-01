@@ -39,6 +39,13 @@ builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 builder.Services.AddScoped<IShoppingListsRepository, ShoppingListsRepository>();
 builder.Services.AddScoped<IShoppingListDetailsRepository, ShoppingListDetailsRepository>();
 
+
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.LoginPath = new PathString("/Auth/Login");
+    opt.LogoutPath = new PathString("/Auth/Logout");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,6 +57,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
