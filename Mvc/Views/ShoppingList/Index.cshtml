@@ -24,11 +24,6 @@
                     <th>@item.ListId</th>
                     <td>@item.ListName</td>
                     <td>@(item.Description != null ? item.Description : "Açıklama yok")</td>
-                    @*<th>
-                        <form asp-action="Delete" asp-route-productId="@item.ProductId">
-                            <input type="submit" value="Sil" class="btn btn-danger" />
-                        </form>
-                    </th>*@
                     <th><a asp-controller="ShoppingList" asp-action="GetListProducts" asp-route-listId="@item.ListId" class="btn btn-primary">Listeyi Görüntüle</a></th>
                     @if (item.GoingToShopping)
                     {
@@ -36,9 +31,8 @@
                     }
                     else
                     {
-                        <th><a asp-controller="ShoppingList" asp-action="AddProduct" asp-route-listId="@item.ListId" class="btn btn-warning">Ürün Ekle</a></th>
+                        <th><a asp-controller="ShosppingList" asp-action="AddProduct" asp-route-listId="@item.ListId" class="btn btn-warning">Ürün Ekle</a></th>
                     }
-                    @*<th><a asp-controller="ShoppingList" asp-action="GoShoppingForList" asp-route-listId="@item.ListId" class="btn btn-warning">Alışverişe Çık</a></th>*@
                     <th>
                         <form asp-action="GoShoppingForList" asp-route-listId="@item.ListId">
                             <input type="submit" value="Alışverişe Çık" class="btn btn-warning" />

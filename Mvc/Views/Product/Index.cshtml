@@ -25,8 +25,7 @@
                     <th>@item.ProductId</th>
                     <td>@item.ProductName</td>
                     <td>@item.CategoryName</td>
-                    <td><img src="data:image;base64,@System.Convert.ToBase64String(item.ProductImage)" width="80" height="80" /></td>
-                    @*<th><a asp-controller="Category" asp-action="Delete" asp-route-categoryId="@item.CategoryId" class="btn btn-danger">Sil</a></th>*@
+                    <td><img src="data:image;base64,@System.Convert.ToBase64String(item.ProductImage)" width="80" height="80" /></td>s
                     <th>
                         <form asp-action="Delete" asp-route-productId="@item.ProductId">
                             <input type="submit" value="Sil" class="btn btn-danger" />

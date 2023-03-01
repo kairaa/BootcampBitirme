@@ -5,7 +5,6 @@
 
 @if(Model is not null)
 {
-
     <table class="table">
         <thead>
             <tr>
@@ -21,7 +20,6 @@
                 <tr>
                     <th>@item.CategoryId</th>
                     <td>@item.CategoryName</td>
-                    @*<th><a asp-controller="Category" asp-action="Delete" asp-route-categoryId="@item.CategoryId" class="btn btn-danger">Sil</a></th>*@
                     <th>
                         <form asp-action="Delete" asp-route-categoryId="@item.CategoryId">
                             <input type="submit" value="Sil" class="btn btn-danger" />

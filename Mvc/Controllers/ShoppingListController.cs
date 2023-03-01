@@ -47,11 +47,6 @@ namespace Mvc.Controllers
             var cookieUser = JsonSerializer.Deserialize<CookieUser>(Request.Cookies["User"]);
             var user = await _userManager.FindByEmailAsync(cookieUser.UserName);
             createShoppingListDto.User = user;
-            /*
-             * var category = _mapper.Map<Category>(createCategoryDto);
-                await _categoryRepository.AddAsync(category);
-                return RedirectToAction(nameof(Index));
-             * */
             var shoppingList = _mapper.Map<ShoppingList>(createShoppingListDto);
             await _shoppingListsRepository.AddAsync(shoppingList);
             return RedirectToAction(nameof(Index));
@@ -82,7 +77,6 @@ namespace Mvc.Controllers
             var listId = JsonSerializer.Deserialize<CookieListId>(Request.Cookies["ListId"]);
             Response.Cookies.Delete("ListId");
             var product = await _productsRepository.GetAsync(addProductToListDto.ProductId);
-            //var shoppingList = await _shoppingListsRepository.GetAsync(addProductToListDto.ShoppingListId);
             var shoppingList = await _shoppingListsRepository.GetAsync(listId.ListId);
             if (product is not null && shoppingList is not null)
             {

@@ -39,8 +39,6 @@ namespace Mvc.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginDto.Password, false, false);
                     if (result.Succeeded)
                     {
-                        //var roles = await _userManager.GetRolesAsync(user);
-                        //TempData["Role"] = roles[0];
                         Response.Cookies.Append("User", JsonSerializer.Serialize(new
                         {
                             FirstName = user.FirstName,
@@ -77,14 +75,12 @@ namespace Mvc.Controllers
                 var user = _mapper.Map<User>(registerDto);
                 user.UserName = registerDto.Email;
                 user.NormalizedEmail = registerDto.Email.ToUpper();
-                //user.SecurityStamp = Guid.NewGuid().ToString();
                 var result = await _userManager.CreateAsync(user, registerDto.Password);
                 await _userManager.AddToRoleAsync(user, "User");
                 if(user != null)
                 {
                     if (result.Succeeded)
                     {
-                        //TempData["Role"] = "User";
                         await _signInManager.SignInAsync(user, false);
                         return RedirectToAction("Index", "Home");
                     }
@@ -110,7 +106,6 @@ namespace Mvc.Controllers
         }
 
         [Authorize]
-        //sisteme giris yapan kullanici cikis yapabilir
         [HttpGet]
         public async Task<IActionResult> Logout()
         {

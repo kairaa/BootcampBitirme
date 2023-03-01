@@ -31,11 +31,6 @@ namespace Mvc.Services.Repositories
 
         public async Task RemoveProductFromList(int listDetailId)
         {
-            /*
-             * var entity = await GetAsync(id);
-            _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
-             */
             var listDetail = await _context.ShoppingListDetail
                 .Where(a => a.ShoppingListDetailId == listDetailId).SingleOrDefaultAsync();
             _context.ShoppingListDetail.Remove(listDetail);

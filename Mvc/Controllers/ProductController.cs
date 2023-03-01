@@ -44,13 +44,11 @@ namespace Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CreateProductDto createProductDto)
         {
-            //createProductDto.ProductImageFileName = "~/img/samsung.jpg";
             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
             FileInfo fileInfo = new FileInfo(createProductDto.ProductImageFile.FileName);
             string fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - 4) + fileInfo.Extension;
 
             string fileNameWithPath = Path.Combine(path, fileName);
-            //fileInfo["Name"] veya fileInfo.name
             using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
             {
                 createProductDto.ProductImageFile.CopyTo(stream);
@@ -103,7 +101,6 @@ namespace Mvc.Controllers
                 string fileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - 4) + fileInfo.Extension;
 
                 string fileNameWithPath = Path.Combine(path, fileName);
-                //fileInfo["Name"] veya fileInfo.name
                 using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                 {
                     updateProductDto.ProductImageFile.CopyTo(stream);
@@ -113,14 +110,10 @@ namespace Mvc.Controllers
 
             updateProductDto.Categories = await _categoryRepository.GetAllAsync();
             
-            //if (ModelState.IsValid)
-            //{
                 var product = await _productRepository.GetAsync(updateProductDto.ProductId);
                 _mapper.Map(updateProductDto, product);
                 await _productRepository.UpdateAsync(product);
                 return RedirectToAction(nameof(Index));
-            //}
-            //return RedirectToAction(nameof(Index));
         }
 
         private static byte[] ReadFile(string name)
